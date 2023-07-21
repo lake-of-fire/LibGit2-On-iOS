@@ -10,13 +10,13 @@ export PATH=$PATH:$REPO_ROOT/tools/bin
 
 # List of platforms-architecture that we support
 # Note that there are limitations in `xcodebuild` command that disallows `maccatalyst` and `macosx` (native macOS lib) in the same xcframework.
-AVAILABLE_PLATFORMS=(iphoneos iphonesimulator iphonesimulator-arm64 maccatalyst maccatalyst-arm64) # macosx macosx-arm64
+AVAILABLE_PLATFORMS=(iphoneos iphonesimulator iphonesimulator-arm64 macosx macosx-arm64) # maccatalyst maccatalyst-arm64
 
 # List of frameworks included in the XCFramework (= AVAILABLE_PLATFORMS without architecture specifications)
-XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator maccatalyst)
+XCFRAMEWORK_PLATFORMS=(iphoneos iphonesimulator macosx) # maccatalyst
 
 # List of platforms that need to be merged using lipo due to presence of multiple architectures
-LIPO_PLATFORMS=(iphonesimulator maccatalyst)
+LIPO_PLATFORMS=(iphonesimulator macosx) # maccatalyst)
 
 ### Setup common environment variables to run CMake for a given platform
 ### Usage:      setup_variables PLATFORM
@@ -108,10 +108,10 @@ function build_openssl() {
 	setup_variables $1
 
 	# It is better to remove and redownload the source since building make the source code directory dirty!
-	rm -rf openssl-3.0.4
-	test -f openssl-3.0.4.tar.gz || wget -q https://www.openssl.org/source/openssl-3.0.4.tar.gz
-	tar xzf openssl-3.0.4.tar.gz
-	cd openssl-3.0.4
+	rm -rf openssl-3.1.1
+	test -f openssl-3.1.1.tar.gz || wget -q https://www.openssl.org/source/openssl-3.1.1.tar.gz
+	tar xzf openssl-3.1.1.tar.gz
+	cd openssl-3.1.1
 
 	case $PLATFORM in
 		"iphoneos")
@@ -148,10 +148,10 @@ function build_openssl() {
 function build_libssh2() {
 	setup_variables $1
 
-	rm -rf libssh2-1.10.0
-	test -f libssh2-1.10.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.10.0.tar.gz
-	tar xzf libssh2-1.10.0.tar.gz
-	cd libssh2-1.10.0
+	rm -rf libssh2-1.11.0
+	test -f libssh2-1.11.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.11.0.tar.gz
+	tar xzf libssh2-1.11.0.tar.gz
+	cd libssh2-1.11.0
 
 	rm -rf build && mkdir build && cd build
 
@@ -171,10 +171,10 @@ function build_libssh2() {
 function build_libgit2() {
     setup_variables $1
 
-    rm -rf libgit2-1.3.1
-    test -f v1.3.1.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.3.1.zip
-    ditto -V -x -k --sequesterRsrc --rsrc v1.3.1.zip ./ >/dev/null 2>/dev/null
-    cd libgit2-1.3.1
+    rm -rf libgit2-1.7.0
+    test -f v1.7.0.zip || wget -q https://github.com/libgit2/libgit2/archive/refs/tags/v1.7.0.zip
+    ditto -V -x -k --sequesterRsrc --rsrc v1.7.0.zip ./ >/dev/null 2>/dev/null
+    cd libgit2-1.7.0
 
     rm -rf build && mkdir build && cd build
 
