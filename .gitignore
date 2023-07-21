@@ -21,3 +21,11 @@ libgit2/
 Clibgit2/
 SampleApp/
 Temp/
+
+openssl-*/
+libssh2-*/
+libgit2-*/
+install/
+*.swp
+*.tar.gz
+*.zip
