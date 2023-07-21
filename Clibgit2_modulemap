@@ -1,5 +1,9 @@
 module Clibgit2 {
-	umbrella header "git2.h"
+    //header "shim.h"
+    link "git2"
+    export *
+
+	//umbrella header "git2.h"
 
 	export *
 	module * { export * }
@@ -28,4 +32,11 @@ module Clibgit2 {
 		export *
 		module * { export * }
 	}
+    
+    explicit module libssh2 {
+        header "libssh2.h"
+        header "libssh2_publickey.h"
+
+        export *
+    }
 }

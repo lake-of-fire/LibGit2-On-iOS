@@ -71,13 +71,13 @@ function setup_variables() {
 
 		"macosx")
 			ARCH=x86_64
-			SYSROOT=`xcodebuild -version -sdk macosx Path`;;
+			SYSROOT=`xcodebuild -version -sdk macosx Path`
+            CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH);;
 
 		"macosx-arm64")
 			ARCH=arm64
 			SYSROOT=`xcodebuild -version -sdk macosx Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH);;
-
+            CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH);;
 		*)
 			echo "Unsupported or missing platform! Must be one of" ${AVAILABLE_PLATFORMS[@]}
 			exit 1;;
@@ -98,9 +98,9 @@ function build_libpcre() {
 		-DPCRE_BUILD_TESTS=NO \
 		-DPCRE_SUPPORT_LIBBZ2=NO)
 
-	cmake "${CMAKE_ARGS[@]}" .. >/dev/null 2>/dev/null
+	cmake "${CMAKE_ARGS[@]}" .. #>/dev/null 2>/dev/null
 
-	cmake --build . --target install >/dev/null 2>/dev/null
+	cmake --build . --target install #>/dev/null 2>/dev/null
 }
 
 ### Build openssl for a given platform
@@ -160,9 +160,9 @@ function build_libssh2() {
 		-DBUILD_EXAMPLES=OFF \
 		-DBUILD_TESTING=OFF)
 
-	cmake "${CMAKE_ARGS[@]}" .. >/dev/null 2>/dev/null
+	cmake "${CMAKE_ARGS[@]}" .. #>/dev/null 2>/dev/null
 
-	cmake --build . --target install >/dev/null 2>/dev/null
+	cmake --build . --target install #>/dev/null 2>/dev/null
 }
 
 ### Build libgit2 for a single platform (given as the first and only argument)
@@ -222,11 +222,13 @@ function copy_modulemap() {
 
 ### Build libgit2 and Clibgit2 frameworks for all available platforms
 
+#rm -rf install
+
 for p in ${AVAILABLE_PLATFORMS[@]}; do
 	echo "Build libraries for $p"
-	build_libpcre $p
-	build_openssl $p
-	build_libssh2 $p
+	#build_libpcre $p
+	#build_openssl $p
+	#build_libssh2 $p
 	build_libgit2 $p
 
 	# Merge all static libs as libgit2.a since xcodebuild doesn't allow specifying multiple .a
@@ -243,9 +245,10 @@ done
 
 # Build raw libgit2 XCFramework for Objective-C usage
 build_xcframework libgit2 ${XCFRAMEWORK_PLATFORMS[@]}
-zip -r libgit2.xcframework.zip libgit2.xcframework/
+#zip -r libgit2.xcframework.zip libgit2.xcframework/
 
 # Build Clibgit2 XCFramework for use with SwiftGit2
+rm -rf Clibgit2.xcframework
 mv libgit2.xcframework Clibgit2.xcframework
 copy_modulemap
 zip -r Clibgit2.xcframework.zip Clibgit2.xcframework/
