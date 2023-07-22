@@ -1,12 +1,8 @@
 module Clibgit2 {
-    //header "shim.h"
-    //link "git2"
-    //export *
-
 	umbrella header "git2.h"
 
 	export *
-	//module * { export * }
+	module * { export * }
 
 	// Exclude headers intended only for Microsoft compilers
 	exclude header "git2/inttypes.h"
@@ -32,11 +28,11 @@ module Clibgit2 {
 		export *
 		module * { export * }
 	}
-    
-    explicit module libssh2 {
-        header "libssh2.h"
-        header "libssh2_publickey.h"
+	
+	explicit module libssh2 {
+		header "libssh2.h"
+		header "libssh2_publickey.h"
 
-        export *
-    }
+		export *
+	}
 }

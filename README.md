@@ -10,9 +10,13 @@ If you want to build the frameworks on your own machine, simply execute the scri
 ```shell
 build-libgit2-framework.sh
 ```
-at the root of this repository. But see [here](https://github.com/light-tech/LLVM-On-iOS#the-tools-we-needs) first for the tools preparation.
+at the root of this repository.
+See [here](https://lightech.visualstudio.com/LibGit2-On-iOS/_build?definitionId=85) for our CI builds on Azure DevOps.
 
-Our releases are built with [GitHub Actions](https://github.com/light-tech/LibGit2-On-iOS/actions).
+*A tip for Windows user*: Instead of using `swift package compute-checksum`, one can also compute checksum with
+```shell
+CertUtil -hashfile Clibgit2.xcframework.zip SHA256
+```
 
 How To Use
 ----------
@@ -35,6 +39,11 @@ But since libgit2 is a C library, [be ready](https://theswiftdev.com/how-to-use-
 Basically, `SwiftGit2` takes care of the not-very-Swift-y Swift code in method 1.
 However, it is missing a lot of Git features such as `git push` so if you need them, you have to write those not-very-Swift-y Swift code yourself as in method 1.
 Thus, we now recommend method 0 as it is best to write C code in C and not Swift's emulation.
+
+Known Issues
+------------
+
+Our prebuilt XCFrameworks can only be used on Intel Macs when building for iOS simulator or Mac Catalyst.
 
 Example
 -------
