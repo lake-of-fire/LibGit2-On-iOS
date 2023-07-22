@@ -17,7 +17,7 @@ AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx-arm64)
 else
 AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx)
 fi
-LIBGIT2_VERSION=1.4.3
+LIBGIT2_VERSION=1.7.0
 # Download build tools
 test -d tools || wget -q https://github.com/light-tech/LLVM-On-iOS/releases/download/llvm12.0.0/tools.tar.xz
 tar xzf tools.tar.xz
@@ -98,10 +98,10 @@ function build_openssl() {
 	setup_variables $1
 
 	# It is better to remove and redownload the source since building make the source code directory dirty!
-	rm -rf openssl-3.0.0
-	test -f openssl-3.0.0.tar.gz || wget -q https://www.openssl.org/source/openssl-3.0.0.tar.gz
-	tar xzf openssl-3.0.0.tar.gz
-	cd openssl-3.0.0
+	rm -rf openssl-3.1.1
+	test -f openssl-3.1.1.tar.gz || wget -q https://www.openssl.org/source/openssl-3.1.1.tar.gz
+	tar xzf openssl-3.1.1.tar.gz
+	cd openssl-3.1.1
 
 	case $PLATFORM in
 		"iphoneos")
@@ -134,10 +134,10 @@ function build_openssl() {
 function build_libssh2() {
 	setup_variables $1
 
-	rm -rf libssh2-1.10.0
-	test -f libssh2-1.10.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.10.0.tar.gz
-	tar xzf libssh2-1.10.0.tar.gz
-	cd libssh2-1.10.0
+	rm -rf libssh2-1.11.0
+	test -f libssh2-1.11.0.tar.gz || wget -q https://www.libssh2.org/download/libssh2-1.11.0.tar.gz
+	tar xzf libssh2-1.11.0.tar.gz
+	cd libssh2-1.11.0
 
 	rm -rf build && mkdir build && cd build
 
@@ -228,8 +228,8 @@ rm -rf install
 for p in ${AVAILABLE_PLATFORMS[@]}; do
 	echo "Build libraries for $p"
 	#build_libpcre $p
-	#build_openssl $p
-	#build_libssh2 $p
+	build_openssl $p
+	build_libssh2 $p
 	build_libgit2 $p
 
 	# Merge all static libs as libgit2.a since xcodebuild doesn't allow specifying multiple .a
