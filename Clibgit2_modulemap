@@ -6,7 +6,7 @@ module Clibgit2 {
 	//umbrella header "git2.h"
 
 	export *
-	module * { export * }
+	//module * { export * }
 
 	// Exclude headers intended only for Microsoft compilers
 	exclude header "git2/inttypes.h"
