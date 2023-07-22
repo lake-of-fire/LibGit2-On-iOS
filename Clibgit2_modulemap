@@ -1,9 +1,9 @@
 module Clibgit2 {
     //header "shim.h"
-    link "git2"
-    export *
+    //link "git2"
+    //export *
 
-	//umbrella header "git2.h"
+	umbrella header "git2.h"
 
 	export *
 	//module * { export * }
