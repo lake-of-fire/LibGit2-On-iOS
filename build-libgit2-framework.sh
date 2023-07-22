@@ -12,7 +12,8 @@ export PATH=$PATH:$REPO_ROOT/tools/bin
 
 # maccatalyst-arm64 macosx macosx-arm64
 if [[ $(arch) == 'arm64' ]]; then
-AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx macosx-arm64)
+AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx-arm64)
+#AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx macosx-arm64)
 else
 AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx)
 fi
@@ -56,16 +57,6 @@ function setup_variables() {
 			ARCH=$(arch)
 			SYSROOT=`xcodebuild -version -sdk iphonesimulator Path`
 			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_OSX_SYSROOT=$SYSROOT);;
-
-		"maccatalyst")
-			ARCH=x86_64
-			SYSROOT=`xcodebuild -version -sdk macosx Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_C_FLAGS=-target\ $ARCH-apple-ios14.1-macabi);;
-
-		"maccatalyst-arm64")
-			ARCH=arm64
-			SYSROOT=`xcodebuild -version -sdk macosx Path`
-			CMAKE_ARGS+=(-DCMAKE_OSX_ARCHITECTURES=$ARCH -DCMAKE_C_FLAGS=-target\ $ARCH-apple-ios14.1-macabi);;
 
 		"macosx")
 			ARCH=x86_64
@@ -120,10 +111,6 @@ function build_openssl() {
 		"iphonesimulator")
 			TARGET_OS=iossimulator-xcrun
 			export CFLAGS="-isysroot $SYSROOT";;
-
-		"maccatalyst"|"maccatalyst-arm64")
-			TARGET_OS=darwin64-$ARCH-cc
-			export CFLAGS="-isysroot $SYSROOT -target $ARCH-apple-ios14.1-macabi";;
 
 		"macosx"|"macosx-arm64")
 			TARGET_OS=darwin64-$ARCH-cc
@@ -240,9 +227,9 @@ rm -rf install
 
 for p in ${AVAILABLE_PLATFORMS[@]}; do
 	echo "Build libraries for $p"
-	build_libpcre $p
-	build_openssl $p
-	build_libssh2 $p
+	#build_libpcre $p
+	#build_openssl $p
+	#build_libssh2 $p
 	build_libgit2 $p
 
 	# Merge all static libs as libgit2.a since xcodebuild doesn't allow specifying multiple .a
