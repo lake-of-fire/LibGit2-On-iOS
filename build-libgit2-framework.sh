@@ -218,7 +218,8 @@ function copy_modulemap() {
 #     local FWDIRS=$(find Clibgit2.xcframework -mindepth 1 -maxdepth 1 -type d)
 #     for d in ${FWDIRS[@]}; do
 #         echo $d
-#         cp OpenSSL.h $d/Headers/OpenSSL.h
+#         mkdir -p $d/Headers/Clibgit2
+#         cp OpenSSL.h $d/Headers/Clibgit2/OpenSSL.h
 #     done
 # }
 
