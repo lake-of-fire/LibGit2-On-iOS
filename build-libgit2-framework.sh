@@ -209,7 +209,8 @@ function copy_modulemap() {
     local FWDIRS=$(find Clibgit2.xcframework -mindepth 1 -maxdepth 1 -type d)
     for d in ${FWDIRS[@]}; do
         echo $d
-        cp Clibgit2_modulemap $d/Headers/module.modulemap
+        mkdir -p $d/Headers/Clibgit2
+        cp Clibgit2_modulemap $d/Headers/Clibgit2/module.modulemap
     done
 }
 
