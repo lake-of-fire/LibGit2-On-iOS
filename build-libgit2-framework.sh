@@ -17,7 +17,7 @@ AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx-arm64)
 else
 AVAILABLE_PLATFORMS=(iphoneos iphonesimulator macosx)
 fi
-LIBGIT2_VERSION=1.7.0
+LIBGIT2_VERSION=1.7.1
 # Download build tools
 test -d tools || wget -q https://github.com/light-tech/LLVM-On-iOS/releases/download/llvm12.0.0/tools.tar.xz
 tar xzf tools.tar.xz
@@ -230,7 +230,7 @@ rm -rf install
 
 for p in ${AVAILABLE_PLATFORMS[@]}; do
 	echo "Build libraries for $p"
-	#build_libpcre $p
+	build_libpcre $p
 	build_openssl $p
 	build_libssh2 $p
 	build_libgit2 $p
